@@ -25,6 +25,9 @@
     <Filter Include="Arquivos de Origem\kinematics">
       <UniqueIdentifier>{abd21220-2e4d-48a3-866b-d79c1208bdf4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\util">
+      <UniqueIdentifier>{a8605a0f-0b4f-45f2-90e6-ed634e3fe7c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="okvis_time\include\okvis\implementation\Duration.hpp">
@@ -47,6 +50,12 @@
     </ClInclude>
     <ClInclude Include="okvis_kinematics\include\okvis\kinematics\implementation\Transformation.hpp">
       <Filter>Arquivos de Cabeçalho\kinematics</Filter>
+    </ClInclude>
+    <ClInclude Include="okvis_util\include\okvis\assert_macros.hpp">
+      <Filter>Arquivos de Cabeçalho\util</Filter>
+    </ClInclude>
+    <ClInclude Include="okvis_util\include\okvis\source_file_pos.hpp">
+      <Filter>Arquivos de Cabeçalho\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

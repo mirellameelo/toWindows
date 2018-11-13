@@ -86,7 +86,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Okvis\okvis_time\include;$(SolutionDir)Okvis\okvis_kinematics\include;$(SolutionDir)dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Okvis\okvis_time\include;$(SolutionDir)Okvis\okvis_kinematics\include;$(SolutionDir)dependencies\include;$(SolutionDir)Okvis\okvis_util\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -126,6 +126,8 @@
     <ClInclude Include="okvis_time\include\okvis\implementation\Duration.hpp" />
     <ClInclude Include="okvis_time\include\okvis\implementation\Time.hpp" />
     <ClInclude Include="okvis_time\include\okvis\Time.hpp" />
+    <ClInclude Include="okvis_util\include\okvis\assert_macros.hpp" />
+    <ClInclude Include="okvis_util\include\okvis\source_file_pos.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="okvis_kinematics\src\dependency-tracker.cc" />
