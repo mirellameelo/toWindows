@@ -4,6 +4,7 @@
 
 ##	Boost:
 - Download 1.68.0 version from: https://dl.bintray.com/boostorg/release/1.68.0/source/
+
 - Substitute the content in bootstrap.bat file for https://github.com/Studiofreya/boost-build-scripts/blob/master/build_boost_1_68_vs2017.5.bat
 - Double click in the new bootstrap.bat file
 
@@ -83,8 +84,8 @@ ___
 - Set BRAS_bras _LIBRARY to (SUITE_SPARSE_PATH)/build/install/lib64/lapack_blas_windows/libblas.lib and click in “configure”
 ___
 - Set LAPACK_lapack _LIBRARY to (SUITESPARSE)/build/install/lib64/lapack_blas_windows/liblapack.lib and click in “configure”
-- Set CXSPARSE_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/CXSparse and CXSPARSE_LIBRARY to (SUITESPARSE)/build/Release/libcxsparse.lib and click in “configure”
 
+- Set CXSPARSE_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/CXSparse and CXSPARSE_LIBRARY to (SUITESPARSE)/build/Release/libcxsparse.lib and click in “configure”
 - Set 	OpenCV_DIR to (OPENCV_PATH)/build and click in “configure"
 ___
 - Set boost_INCLUDE_DIR to (BOOST_DIR), set boost_FILESYSTEM_LIBRARY_DEBUG to (BOOST_DIR)/bin.v2/libs/filesystem/build/msvc-14.1/debug/address-model-64/link-static/threading-multi/libboost_filesystem-vc141-mt-gd-x64-1_68.lib
@@ -95,7 +96,6 @@ ___
 
 ## Brisk
 - In (OKVIS_PATH)/build/brisk/src extract brisk.zip 
-
 - Use CMake to generate the project. Set the source and build folders to (BRISK_PATH)/ and (BRISK_PATH)/build, respectively
 - Click in “configure” and set the generator to “Visual Studio 15 2017 Win64” and then click in “finish”
 - Set OpenCV_DIR to (OPENCV_PATH)/build and click in “configure” and then in “generate”		
@@ -120,6 +120,8 @@ ___
 
 - Open the *.sln generated
 - Right click in brisk_external project and remove it 
+- Right click in ceres_external project and remove it
+- Right click in opengv_external project and remove it
 
     ### Util project
 - Build okvis_util project on Debug and Release in x64 configuration 
@@ -135,10 +137,33 @@ ___
     to 
 
         inline
-- Right click in okvis_cv project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES in Debug and Release configuration
-- Build okvis_cv project on Debug and Release in x64 configuration 
+
+    ### Matcher project
 - Build okvis_matcher project on Debug and Release in x64 configuration 
-- Right click in okvis_ceres project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES, GLOG_NO_ABBREVIATED_SEVERITIES and NOMINMAX in Debug and Release configuration
+
+    ### Cv project
+- Right click in okvis_cv project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
+
+        _USE_MATH_DEFINES 
+    in Debug and Release configuration
+- Build okvis_cv project on Debug and Release in x64 configuration 
+
+    ### Common project
+- Right click in okvis_common project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
+
+        _USE_MATH_DEFINES 
+    in Debug and Release configuration
+- Right click in okvis_common project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include and (OPENCV_DIR)/build/install/include are there. Otherwise, add they in Debug and Release configuration
+- Build okvis_common project on Debug and Release in x64 configuration  
+
+    ### Ceres project
+- Right click in okvis_ceres project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
+
+        _USE_MATH_DEFINES 
+        GLOG_NO_ABBREVIATED_SEVERITIES  
+        NOMINMAX 
+
+    in Debug and Release configuration
 - Right click in okvis_ceres project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include and (OPENCV_DIR)/build/install/include are there. Otherwise, add they in Debug and Release configuration
 - In okvis_ceres project > External Dependencies> ode.hpp change all 
 
@@ -147,18 +172,50 @@ ___
     to 
     
         inline
+- Build okvis_ceres project on Debug and Release in x64 configuration 
 
-- Right click in okvis_common project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES in Debug and Release configuration
-- Right click in okvis_common project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include and (OPENCV_DIR)/build/install/include are there. Otherwise, add they in Debug and Release configuration
+    ### Timming project
+    
+- Right click in okvis_timing project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
 
-- Right click in okvis_timing project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add NOMINMAX in Debug and Release configuration
+        NOMINMAX 
+    in Debug and Release configuration
 - Right click in okvis_timing project > Properties > C/C++ > General > Additional Include Directories and make sure that (BOOST_DIR) are there. Otherwise, add it in Debug and Release configuration
 - Build okvis_timing project on Debug and Release in x64 configuration 
 
-- Right click in okvis_frontend project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include, (OPENCV_DIR)/build/install/include, (BOOST_DIR), (OKVIS_DIR)/build/brisk/src/brisk_external/include, (OKVIS_DIR)/build/brisk/src/brisk_external/agast/include and (OKVIS_DIR)/build/opengv/src/opengv/include are there. Otherwise, add they in Debug and Release configuration
-- Right click in okvis_frontend project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES and NOMINMAX in Debug and Release configuration
+    ### Frontend project
 
-- In (OKVIS_DIR)/okvis_multisensor_processing/include create an empty folder colled “sys” and into that, creat “time.h” and “times.h” files, which contain, respectively: 
+- Right click in okvis_frontend project > Properties > C/C++ > General > Additional Include Directories and make sure that: 
+(CERES_SOLVER_DIR)/build/install/include;
+(OPENCV_DIR)/build/install/include; 
+(BOOST_DIR); 
+(OKVIS_DIR)/build/brisk/src/brisk_external/include;
+(OKVIS_DIR)/build/brisk/src/brisk_external/agast/include;
+(OKVIS_DIR)/build/opengv/src/opengv/include are there. Otherwise, add they in Debug and Release configuration
+- Right click in okvis_frontend project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
+
+        _USE_MATH_DEFINES 
+        NOMINMAX 
+
+    in Debug and Release configuration
+    
+    ### Multisensor Processing project
+    
+- Right click in okvis_multisensor_processing project > Properties > C/C++ > General > Additional Include Directories and make sure that:
+(CERES_SOLVER_DIR)/build/install/include;
+(BOOST_DIR) and (OKVIS_DIR)/build/packages/pthreads.2.9.1.4/build/native/include are there. Otherwise, add they in Debug and Release configuration
+
+- Right click in okvis_ multisensor_processing project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
+
+        _USE_MATH_DEFINES
+        NOMINMAX 
+        HAVE_STRUCT_TIMESPEC 
+        GLOG_NO_ABBREVIATED_SEVERITIES
+
+    in Debug and Release configuration
+
+- In (OKVIS_DIR)/okvis_multisensor_processing/include create an empty folder colled “sys” and into thais new folder, creat “time.h” and “times.h” files, which must contain, respectively: 
+
     ```c
     #pragma once
     #ifndef _TIMES_H
@@ -221,20 +278,41 @@ ___
     ```
 
     And add it into okvis_multisensor_processing project > Source Files
+    
+- Build okvis_multisensor_processing project on Debug and Release in x64 configuration
 
-- Right click in okvis_multisensor_processing project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include, (BOOST_DIR) and (OKVIS_DIR)/build/packages/pthreads.2.9.1.4/build/native/include are there. Otherwise, add they in Debug and Release configuration
-- Right click in okvis_ multisensor_processing project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES, NOMINMAX, HAVE_STRUCT_TIMESPEC and GLOG_NO_ABBREVIATED_SEVERITIES in Debug and Release configuration
-- Remove lib\libbrisk.a lib\libagast.a lib\libceres.a gomp.lib lib\libopengv.a
+    ### Okvis Apps Synchronous
+    
+- Right click in okvis_app_synchronous project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
+
+        _USE_MATH_DEFINES
+        NOMINMAX 
+        HAVE_STRUCT_TIMESPEC 
+        GLOG_NO_ABBREVIATED_SEVERITIES
+        WIN32_LEAN_AND_MEAN
+
+    in Debug and Release configuration
+    
+- Right click in okvis_multisensor_processing project > Properties > Linker > Input > Additional Dependencies and remove 
+    - lib\libbrisk.a 
+    - lib\libagast.a 
+    - lib\libceres.a 
+    - gomp.lib 
+    - lib\libopengv.a
+
+    And add:
+    - (OPENGV_DIR)/build/Release/opengv.lib
+    - (CERES_SOLVER_DIR)/build/lib/Release/ceres.lib
+    - (BRISK_DIR)/build/lib/Release/brisk.lib
+    - (BOOST_DIR)/bin.v2/libs/date_time/build/msvc-14.1/release/address-model-64/link-static/threading-multi/libboost_date_time-vc141-mt-x64-1_68.lib
+    
+         
 - Libpthread – adicionar path
-- Ceres.lib brisk.lib opengv.lib – adicionar path
-- \bin.v2\libs\date_time\build\msvc-14.1\release\address-model-64\link-static\threading-multi\libboost_date_time-vc141-mt-x64-1_68.lib – adicionar path
 
 At the end of this, you must have the following libraries that are used in Okvis:
-
 
 
 ```sh
 cd dillinger
 docker build -t joemccann/dillinger:${package.json.version} .
 ```
-
