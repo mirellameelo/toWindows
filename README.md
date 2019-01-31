@@ -115,3 +115,126 @@ ___
 
     and remove both “brisk::”
 - Build brisk project on Debug and Release in x64 configuration 
+
+## OKVIS solution
+
+- Open the *.sln generated
+- Right click in brisk_external project and remove it 
+
+    ### Util project
+- Build okvis_util project on Debug and Release in x64 configuration 
+
+    ### Time project
+- Build okvis_time project on Debug and Release in x64 configuration 
+
+    ### Kinematics project
+- Build okvis_kinematics project on Debug and Release in x64 configuration 
+- In okvis_cv project > External Dependencies > implementation/transformation.hpp change all 
+
+        __inline__ 
+    to 
+
+        inline
+- Right click in okvis_cv project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES in Debug and Release configuration
+- Build okvis_cv project on Debug and Release in x64 configuration 
+- Build okvis_matcher project on Debug and Release in x64 configuration 
+- Right click in okvis_ceres project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES, GLOG_NO_ABBREVIATED_SEVERITIES and NOMINMAX in Debug and Release configuration
+- Right click in okvis_ceres project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include and (OPENCV_DIR)/build/install/include are there. Otherwise, add they in Debug and Release configuration
+- In okvis_ceres project > External Dependencies> ode.hpp change all 
+
+        __inline__ 
+
+    to 
+    
+        inline
+
+- Right click in okvis_common project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES in Debug and Release configuration
+- Right click in okvis_common project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include and (OPENCV_DIR)/build/install/include are there. Otherwise, add they in Debug and Release configuration
+
+- Right click in okvis_timing project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add NOMINMAX in Debug and Release configuration
+- Right click in okvis_timing project > Properties > C/C++ > General > Additional Include Directories and make sure that (BOOST_DIR) are there. Otherwise, add it in Debug and Release configuration
+- Build okvis_timing project on Debug and Release in x64 configuration 
+
+- Right click in okvis_frontend project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include, (OPENCV_DIR)/build/install/include, (BOOST_DIR), (OKVIS_DIR)/build/brisk/src/brisk_external/include, (OKVIS_DIR)/build/brisk/src/brisk_external/agast/include and (OKVIS_DIR)/build/opengv/src/opengv/include are there. Otherwise, add they in Debug and Release configuration
+- Right click in okvis_frontend project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES and NOMINMAX in Debug and Release configuration
+
+- In (OKVIS_DIR)/okvis_multisensor_processing/include create an empty folder colled “sys” and into that, creat “time.h” and “times.h” files, which contain, respectively: 
+    ```c
+    #pragma once
+    #ifndef _TIMES_H
+    #include "sys/times.h"
+    #endif
+    ```
+
+    ```c
+    #ifndef _TIMES_H
+    #define _TIMES_H
+
+    #ifdef _WIN32
+    #include <sys/timeb.h>
+    #include <sys/types.h>
+    #include <windows.h>
+
+    int gettimeofday(struct timeval* t,void* timezone);
+
+    #define __need_clock_t
+    #include <time.h>
+
+    /* Structure describing CPU time used by a process and its children.  */
+    struct tms
+    {
+        clock_t tms_utime;          /* User CPU time.  */
+        clock_t tms_stime;          /* System CPU time.  */
+
+        clock_t tms_cutime;         /* User CPU time of dead children.  */
+        clock_t tms_cstime;         /* System CPU time of dead children.  */
+    };
+
+    clock_t times (struct tms *__buffer);
+    typedef long long suseconds_t ;
+
+    #endif
+    #endif
+    ```
+
+- In (OKVIS_DIR)/okvis_multisensor_processing/src folder, add a time.cpp file, that must contain: 
+
+    ```c
+    #include "sys/times.h"
+
+    int gettimeofday(struct timeval* t,void* timezone)
+    {       struct _timeb timebuffer;
+    _ftime( &timebuffer );
+    t->tv_sec=timebuffer.time;
+    t->tv_usec=1000*timebuffer.millitm;
+    return 0;
+    }
+
+    clock_t times (struct tms *__buffer) {
+
+    __buffer->tms_utime = clock();
+    __buffer->tms_stime = 0;
+    __buffer->tms_cstime = 0;
+    __buffer->tms_cutime = 0;
+    return __buffer->tms_utime;
+    }
+    ```
+
+    And add it into okvis_multisensor_processing project > Source Files
+
+- Right click in okvis_multisensor_processing project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include, (BOOST_DIR) and (OKVIS_DIR)/build/packages/pthreads.2.9.1.4/build/native/include are there. Otherwise, add they in Debug and Release configuration
+- Right click in okvis_ multisensor_processing project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add _USE_MATH_DEFINES, NOMINMAX, HAVE_STRUCT_TIMESPEC and GLOG_NO_ABBREVIATED_SEVERITIES in Debug and Release configuration
+- Remove lib\libbrisk.a lib\libagast.a lib\libceres.a gomp.lib lib\libopengv.a
+- Libpthread – adicionar path
+- Ceres.lib brisk.lib opengv.lib – adicionar path
+- \bin.v2\libs\date_time\build\msvc-14.1\release\address-model-64\link-static\threading-multi\libboost_date_time-vc141-mt-x64-1_68.lib – adicionar path
+
+At the end of this, you must have the following libraries that are used in Okvis:
+
+
+
+```sh
+cd dillinger
+docker build -t joemccann/dillinger:${package.json.version} .
+```
+
