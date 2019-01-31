@@ -149,14 +149,24 @@ ___
 - Build okvis_cv project on Debug and Release in x64 configuration 
 
     ### Common project
+    
+- Right click in okvis_common project > Properties > C/C++ > General > Additional Include Directories and add in Debug and Release configuration:
+    - (CERES_SOLVER_DIR)/build/install/include
+    - (OPENCV_DIR)/build/install/include 
+
 - Right click in okvis_common project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
 
         _USE_MATH_DEFINES 
     in Debug and Release configuration
-- Right click in okvis_common project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include and (OPENCV_DIR)/build/install/include are there. Otherwise, add they in Debug and Release configuration
+
 - Build okvis_common project on Debug and Release in x64 configuration  
 
     ### Ceres project
+    
+- Right click in okvis_ceres project > Properties > C/C++ > General > Additional Include Directories and add in Debug and Release configuration:
+(CERES_SOLVER_DIR)/build/install/include
+(OPENCV_DIR)/build/install/include
+
 - Right click in okvis_ceres project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
 
         _USE_MATH_DEFINES 
@@ -164,7 +174,7 @@ ___
         NOMINMAX 
 
     in Debug and Release configuration
-- Right click in okvis_ceres project > Properties > C/C++ > General > Additional Include Directories and make sure that (CERES_SOLVER_DIR)/build/install/include and (OPENCV_DIR)/build/install/include are there. Otherwise, add they in Debug and Release configuration
+
 - In okvis_ceres project > External Dependencies> ode.hpp change all 
 
         __inline__ 
@@ -176,22 +186,25 @@ ___
 
     ### Timming project
     
+- Right click in okvis_timing project > Properties > C/C++ > General > Additional Include Directories and add in Debug and Release configuration: 
+    - (BOOST_DIR) 
 - Right click in okvis_timing project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
 
         NOMINMAX 
     in Debug and Release configuration
-- Right click in okvis_timing project > Properties > C/C++ > General > Additional Include Directories and make sure that (BOOST_DIR) are there. Otherwise, add it in Debug and Release configuration
+
 - Build okvis_timing project on Debug and Release in x64 configuration 
 
     ### Frontend project
 
-- Right click in okvis_frontend project > Properties > C/C++ > General > Additional Include Directories and make sure that: 
-(CERES_SOLVER_DIR)/build/install/include;
-(OPENCV_DIR)/build/install/include; 
-(BOOST_DIR); 
-(OKVIS_DIR)/build/brisk/src/brisk_external/include;
-(OKVIS_DIR)/build/brisk/src/brisk_external/agast/include;
-(OKVIS_DIR)/build/opengv/src/opengv/include are there. Otherwise, add they in Debug and Release configuration
+- Right click in okvis_frontend project > Properties > C/C++ > General > Additional Include Directories and add in Debug and Release configuration:
+    - (CERES_SOLVER_DIR)/build/install/include;
+    - (OPENCV_DIR)/build/install/include; 
+    - (BOOST_DIR); 
+    - (OKVIS_DIR)/build/brisk/src/brisk_external/include;
+    - (OKVIS_DIR)/build/brisk/src/brisk_external/agast/include;
+    - (OKVIS_DIR)/build/opengv/src/opengv/include
+
 - Right click in okvis_frontend project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
 
         _USE_MATH_DEFINES 
@@ -201,9 +214,11 @@ ___
     
     ### Multisensor Processing project
     
-- Right click in okvis_multisensor_processing project > Properties > C/C++ > General > Additional Include Directories and make sure that:
-(CERES_SOLVER_DIR)/build/install/include;
-(BOOST_DIR) and (OKVIS_DIR)/build/packages/pthreads.2.9.1.4/build/native/include are there. Otherwise, add they in Debug and Release configuration
+- Download pthreads-w32-2-9-1-release.zip from ftp://sourceware.org/pub/pthreads-win32/ and extract it    
+- Right click in okvis_multisensor_processing project > Properties > C/C++ > General > Additional Include Directories and add in Debug and Release configuration:
+    - (CERES_SOLVER_DIR)/build/install/include
+    - (BOOST_DIR)
+    - (PTHREAD_DIR)/include
 
 - Right click in okvis_ multisensor_processing project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
 
@@ -283,6 +298,13 @@ ___
 
     ### Okvis Apps Synchronous
     
+- Right click in okvis_app_synchronous project > Properties > C/C++ > General > Additional Include Directories and add in Debug and Release configuration:
+    - (CERES_SOLVER_DIR)/build/install/include;
+    - (BOOST_DIR); 
+    - (PTHREAD_DIR)/include
+    - (OPENCV_DIR)/build/install/include
+
+    
 - Right click in okvis_app_synchronous project > Properties > C/C++ > Preprocessor > Preprocessor Definitions and add 
 
         _USE_MATH_DEFINES
@@ -305,14 +327,7 @@ ___
     - (CERES_SOLVER_DIR)/build/lib/Release/ceres.lib
     - (BRISK_DIR)/build/lib/Release/brisk.lib
     - (BOOST_DIR)/bin.v2/libs/date_time/build/msvc-14.1/release/address-model-64/link-static/threading-multi/libboost_date_time-vc141-mt-x64-1_68.lib
-    
-         
-- Libpthread – adicionar path
+    - (PTHREAD_DIR)/lib/x64/pthreadVC2.lib
 
 At the end of this, you must have the following libraries that are used in Okvis:
 
-
-```sh
-cd dillinger
-docker build -t joemccann/dillinger:${package.json.version} .
-```
