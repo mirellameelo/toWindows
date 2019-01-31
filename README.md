@@ -1,25 +1,3 @@
-Okvis -> windows
-1)	“time”: 
-	a.	Time (dependência interna)
-		i.	Em propriedades -> diretório de inclusão adc: okvis_time\include
-
-2)	“ kinematics” : 
-	a.	Gteste (dependencia externa)
-		i.	em pré-processador _USE_MATH_DEFINES
-		ii.	Em propriedades -> diretório de inclusão adc: include\gteste
-		iii.	https://github.com/google/googletest
-
-	b.	Eigen3 (dependencia externa)
-		i.	modificação de __inline__ para inline
-		ii.	Em propriedades -> diretório de inclusão adc: include\eigen
-		iii.	http://eigen.tuxfamily.org/index.php?title=Main_Page
-
-	c.	Kinematics (dependência interna)
-		i.	Em propriedades -> diretório de inclusão adc: include\kinematics
-
-3)	“util”
-	a.	Util (dependência interna)
-		i.	Em propriedades -> diretório de inclusão adc: include\util
 # Okvis – building to Windows – VS15 (2017), v141, x64
 
 #	External dependencies:
@@ -40,7 +18,7 @@ Okvis -> windows
         #define NOMINMAX
         #include <windows.h>
         #include <algorithm>
-    
+        
 -  In libglog project open port.cc and after all includes comment the entire function 
 
         Int snprintf(...)
@@ -56,6 +34,7 @@ Okvis -> windows
 - Use CMake to generate the project. Set the source and build folders to (OPENCV_PATH)/ and (OPENCV_PATH)/build, respectively
 - Click in “configure” and set the generator to “Visual Studio 15 2017 Win64” and then click in “Finish”
 - Uncheck “BUILD_TEST”, click in “configure” and then in “generate”
+
 - Open the *.sln file generated and build ALL BUILD and INSTALL project on Debug and Release in x64 configuration 
 
 ## Suite Sparse, CXSparse, Bras and Lapack:
@@ -63,11 +42,13 @@ Okvis -> windows
 - Use CMake to generate the project. Set the source and build folders to (SUITE_SPARSE_PATH)/ and (SUITE_SPARSE_PATH)/build, respectively
 - Click in “configure” and set the generator to “Visual Studio 15 2017 Win64” and then click in “finish”
 - Click in “generate” 
+
 - Open the *.sln file generated and build ALL BUILD and INSTALL projects on Debug and Release in x64 configuration 
 
 ## Ceres solver
 - Download from https://github.com/ceres-solver/ceres-solver 
 - Use CMake to generate the project. Set the source and build folders to (CERES_PATH)/ and (CERES_PATH)/build, respectively
+
 - Click in “configure” and set the generator to “Visual Studio 15 2017 Win64” and then click in “finish”
 - Uncheck BUILD_EXAMPLES and BUILD_TESTING, change the CMAKE_INSTALL_PREIFIX to point to (CERES_PATH)/build/install, set the EIGEN_INCLUDE_DIR to (EIGEN_PATH)/ and click in “configure” 
 - Set GLOG_INCLUDE_DIR to (GLOG_PATH)/src/windows and click in “configure”
@@ -76,6 +57,7 @@ Okvis -> windows
 
 ## OpenGV
 - Download from https://github.com/ethz-asl/opengv
+
 - Use CMake to generate the project. Set the source and build folders to (OPENGV_PATH)/ and (OPENGV_PATH)/build, respectively
 - Click in “configure”, set the generator to “Visual Studio 15 2017 Win64” and then click in “finish”
 - Click in “generate” 
@@ -84,13 +66,14 @@ Okvis -> windows
 ## OKVIS
 
 - Download from https://github.com/ethz-asl/okvis
+
 - Use CMake to generate the project. Set the source and build folders to (OKVIS_PATH)/ and (OKVIS_PATH)/build, respectively
 - EIGEN_INCLUDE_DIR to (EIGEN_PATH)/ and click in “configure”
 - Set GLOG_INCLUDE_DIR to (GLOG_PATH)/src/windows and click in “configure”
 - Set GLOG_LIBRARY to (GLOG_PATH)/x64/Release/libglog.lib and click in “configure”
-
-
+___
 - Set AMD_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/AMD and AMD_LIBRARY to (SUITE_SPARSE_PATH)/build/Release/libamd.lib
+
 - Set CAMD_INCLUDE_DIR to (SUITESPARSE)/SuiteSparse/CAMD and AMD_LIBRARY to (SUITE_SPARSE_PATH)/build/Release/libcamd.lib
 - Set CCOLAMD_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/CCOLAMD and CCOLAMD _LIBRARY to (SUITE_SPARSE_PATH)/build/Release/libccolamd.lib
 - Set COLAMD_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/COLAMD and COLAMD _LIBRARY to (SUITE_SPARSE_PATH)/build/Release/libcolamd.lib
@@ -98,13 +81,11 @@ Okvis -> windows
 - Set SUITESPARSE_CONFIG_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/SuiteSparse_config and SUITESPARSE_CONFIG _LIBRARY to (SUITE_SPARSE_PATH)/build/Release/suitesparseconfig.lib
 - Set SUITESPARSEQR_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/SPQR and SUITESPARSEQR _LIBRARY to (SUITE_SPARSE_PATH)/build/Release/libspqr.lib
 - Set BRAS_bras _LIBRARY to (SUITE_SPARSE_PATH)/build/install/lib64/lapack_blas_windows/libblas.lib and click in “configure”
-
-
+___
 - Set LAPACK_lapack _LIBRARY to (SUITESPARSE)/build/install/lib64/lapack_blas_windows/liblapack.lib and click in “configure”
 - Set CXSPARSE_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/CXSparse and CXSPARSE_LIBRARY to (SUITESPARSE)/build/Release/libcxsparse.lib and click in “configure”
 - Set 	OpenCV_DIR to (OPENCV_PATH)/build and click in “configure"
- 
-
+___
 - Set boost_INCLUDE_DIR to (BOOST_DIR), set boost_FILESYSTEM_LIBRARY_DEBUG to (BOOST_DIR)/bin.v2/libs/filesystem/build/msvc-14.1/debug/address-model-64/link-static/threading-multi/libboost_filesystem-vc141-mt-gd-x64-1_68.lib 
 - Set boost_FILESYSTEM_LIBRARY_RELEASE to (BOOST_DIR)/bin.v2/libs/filesystem/build/msvc-14.1/release/address-model-64/link-static/threading-multi/libboost_filesystem-vc141-mt-x64-1_68.lib
 - Set boost_SYSTEM_LIBRARY_DEBUG to (BOOST_DIR) /bin.v2/libs/system/build/msvc-14.1/debug/address-model-64/link-static/threading-multi/libboost_system-vc141-mt-gd-x64-1_68.lib 
@@ -131,11 +112,3 @@ Okvis -> windows
 
     and remove both “brisk::”
 - Build brisk project on Debug and Release in x64 configuration 
-
-## OKVIS solution
-
-
-```sh
-cd dillinger
-docker build -t joemccann/dillinger:${package.json.version} .
-```
