@@ -86,13 +86,15 @@ ___
 - Set CXSPARSE_INCLUDE_DIR to (SUITE_SPARSE_PATH)/SuiteSparse/CXSparse and CXSPARSE_LIBRARY to (SUITESPARSE)/build/Release/libcxsparse.lib and click in “configure”
 - Set 	OpenCV_DIR to (OPENCV_PATH)/build and click in “configure"
 ___
-- Set boost_INCLUDE_DIR to (BOOST_DIR), set boost_FILESYSTEM_LIBRARY_DEBUG to (BOOST_DIR)/bin.v2/libs/filesystem/build/msvc-14.1/debug/address-model-64/link-static/threading-multi/libboost_filesystem-vc141-mt-gd-x64-1_68.lib 
+- Set boost_INCLUDE_DIR to (BOOST_DIR), set boost_FILESYSTEM_LIBRARY_DEBUG to (BOOST_DIR)/bin.v2/libs/filesystem/build/msvc-14.1/debug/address-model-64/link-static/threading-multi/libboost_filesystem-vc141-mt-gd-x64-1_68.lib
+
 - Set boost_FILESYSTEM_LIBRARY_RELEASE to (BOOST_DIR)/bin.v2/libs/filesystem/build/msvc-14.1/release/address-model-64/link-static/threading-multi/libboost_filesystem-vc141-mt-x64-1_68.lib
 - Set boost_SYSTEM_LIBRARY_DEBUG to (BOOST_DIR) /bin.v2/libs/system/build/msvc-14.1/debug/address-model-64/link-static/threading-multi/libboost_system-vc141-mt-gd-x64-1_68.lib 
 - Set boost_SYSTEM_LIBRARY_RELEASE to (BOOST_DIR)/bin.v2/libs/system/build/msvc-14.1/release/address-model-64/link-static/threading-multi/libboost_system-vc141-mt-x64-1_68.lib and click in “configure” and then in “generate”		
 
 ## Brisk
 - In (OKVIS_PATH)/build/brisk/src extract brisk.zip 
+
 - Use CMake to generate the project. Set the source and build folders to (BRISK_PATH)/ and (BRISK_PATH)/build, respectively
 - Click in “configure” and set the generator to “Visual Studio 15 2017 Win64” and then click in “finish”
 - Set OpenCV_DIR to (OPENCV_PATH)/build and click in “configure” and then in “generate”		
